@@ -26,7 +26,8 @@ echo "            -> Done"
 
 # Starting SonarQube Service
 echo "*****Starting SonarQube Server"
-./opt/sonarqube/sonarqube-9.7.1.62043/bin/linux-x86-64/sonar.sh start 1>/dev/null
+cd /opt
+./sonarqube/sonarqube-9.7.1.62043/bin/linux-x86-64/sonar.sh start 1>/dev/null
 
 
 # Check if SonarQube is working
