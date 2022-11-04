@@ -3,7 +3,7 @@
 echo "\n################################################################"
 echo "#                                                              #"
 echo "#                     ***Artisan Tek***                        #"
-echo "#                 Artifactory  Installation                    #"
+echo "#                  Sonarqube  Installation                     #"
 echo "#                                                              #"
 echo "################################################################"
 
@@ -20,30 +20,29 @@ sudo cp artifactory.service /etc/systemd/system/artifactory.service
 sudo systemctl daemon-reload 1>/dev/null
 echo "            -> Done"
 
-# Downloading JFROG Artifactory 6.9.6 version to OPT folder
-echo "*****Downloading JFROG Artifactory 6.9.6 version"
-sudo systemctl stop artifactory > /dev/null 2>&1
+# Downloading SonarQube 9.7.1 version to OPT folder
+echo "*****Downloading SonarQube 9.7.1 version"
 cd /opt 
-sudo rm -rf jfrog* artifactory*
-sudo wget -q https://jfrog.bintray.com/artifactory/jfrog-artifactory-oss-6.9.6.zip
-sudo unzip -q jfrog-artifactory-oss-6.9.6.zip -d /opt/artifactory 1>/dev/null
-sudo chown -R artifactory: /opt/artifactory/*
-sudo rm -rf jfrog-artifactory-oss-6.9.6.zip
+sudo rm -rf sonarqube*
+sudo wget -q https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.7.1.62043.zip
+sudo unzip -q sonarqube-9.7.1.62043.zip -d /opt/sonarqube 1>/dev/null
+sudo useradd -r -m -U -d /opt/sonarqube -s /bin/false sonarqube 2>/dev/null
+sudo chown -R sonarqube: /opt/sonarqube
+sudo rm -rf sonarqube-9.7.1.62043.zip
 echo "            -> Done"
 
-# Starting Artifactory Service
-echo "*****Starting Artifactory Service"
-sudo systemctl start artifactory 1>/dev/null
+# Starting SonarQube Service
+echo "*****Starting SonarQube Server"
+./opt/sonarqube/sonarqube-9.7.1.62043/bin/linux-x86-64/sonar.sh start 1>/dev/null
 
 
-# Check if Artifactory is working
-sudo systemctl is-active --quiet artifactory
+# Check if SonarQube is working
 echo "\n################################################################ \n"
 if [ $? -eq 0 ]; then
-	echo "Artifactory installed Successfully"
-	echo "Access Artifactory using $(curl -s ifconfig.me):8081"
+	echo "SonarQube installed Successfully"
+	echo "Access SonarQube using $(curl -s ifconfig.me):9000"
 else
-	echo "Artifactory installation failed"
+	echo "SonarQube installation failed"
 fi
 echo "\n################################################################ \n"
 
