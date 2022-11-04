@@ -13,13 +13,6 @@ sudo apt-get update -y > /dev/null 2>&1
 sudo apt-get install -y default-jre unzip > /dev/null 2>&1
 echo "            -> Done"
 
-# Configuring Artifactory as a Service
-echo "*****Configuring Artifactory as a Service"
-sudo useradd -r -m -U -d /opt/artifactory -s /bin/false artifactory 2>/dev/null
-sudo cp artifactory.service /etc/systemd/system/artifactory.service
-sudo systemctl daemon-reload 1>/dev/null
-echo "            -> Done"
-
 # Downloading SonarQube 9.7.1 version to OPT folder
 echo "*****Downloading SonarQube 9.7.1 version"
 cd /opt 
